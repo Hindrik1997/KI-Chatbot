@@ -8,6 +8,8 @@
 :- include(reddit).
 :- include(redditapi).
 :- include(redditauthorization).
+:- include(werkendeserver).
+:- include(manualAlice).
 
 category([
 	pattern([yea]),
@@ -22,11 +24,6 @@ category([
 	pattern([can,you,star(A),'?']),
 	template(['I', 'don''t', really, know, if,'I','can', A,
 		but,'I''m',very,good,at,browsing,meems,all,day,long,'.'])
-]).
-
-category([
-	pattern(['is',star(A),'a','faggot','?']),
-	template(['reddit.com/r/', A])
 ]).
 
 category([
