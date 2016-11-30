@@ -10,8 +10,43 @@
 category([
 	pattern([can,you,star(A),'?']),
 	template(['I', 'don''t', really, know, if,'I','can', A,
-		but,'I''m', very, good, at, swimming])
+		but,'I''m',very,good,at,browsing,meems,all,day,long,'.'])
 ]).
+
+category([
+	pattern([yes]),
+	that([do, you, like, trebuchetmemes,'?']),
+	template(['What', is, your, favourite, meem, '?'])
+]).
+
+category([
+	pattern([star(_),always,star(_)]),
+	template(['Can',you,think,of,a,specific,example,'?'])
+]).
+
+category([
+	pattern([are,you,afraid,of,syntax(np,NP),'?']),
+	template(['Why',would,'I',be,afraid,of,NP,'?!',',','I',am,a,'digital chatbot!'])
+]).
+
+
+
+category([
+	pattern(['Do you think you are',star(A),'?']),
+	template(['I am a chatbot, ofcourse i am',A,'!?'])
+]).
+
+category([
+	pattern([star(_)]),
+	template([random([
+		['So what is your favorite type of meem','?'],
+		['How often do you browse reddit','?'],
+		['What is the best subreddit in the world','?']])
+	])
+]).
+
+/*
+
 
 category([
 	pattern([who,is,alan,turing,'?']),
@@ -23,16 +58,9 @@ category([
 	template([srai([who,is,A,'?'])])
 ]).
 
-category([
-	pattern([yes]),
-	that([do, you, like, movies,'?']),
-	template(['What', is, your, favourite, movie, '?'])
-]).
 
-category([
-	pattern([star(_),always,star(_)]),
-	template(['Can',you,think,of,a,specific,example,'?'])
-]).
+
+
 
 category([
 	pattern([how,much,is,star([A]),plus,star([B]),'?']),
@@ -66,19 +94,9 @@ category([
 		think(process_create(path(play), ['emergency.mp3'], [stderr(null)]))])
 ]).
 
-category([
-	pattern([are,you,afraid,of,syntax(np,NP),'?']),
-	template(['Why',would,'I',be,afraid,of,NP,'?!'])
-]).
 
-category([
-	pattern([star(_)]),
-	template([random([
-		[so,what,is,your,horoscope,'?'],
-		[do,you,like,movies,'?'],
-		[do,you,like,dancing,'?']])
-	])
-]).
+
+
 
 % Family tree
 female(helen).
@@ -109,7 +127,7 @@ father_of(X,Y) :- male(X),
                   parent_of(X,Y).
 mother_of(X,Y) :- female(X),
                   parent_of(X,Y).
-
+*/
 % http://openweathermap.org/
 %temperature(City,Temp) :-
 %	format(atom(HREF),'http://api.openweathermap.org/data/2.5/weather?q=~q',[City]),
