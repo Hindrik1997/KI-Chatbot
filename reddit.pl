@@ -20,7 +20,7 @@ category([
 
 category([
 	pattern(['Where',can,i,find,funny,memes,'?']),
-	template(['Please',got,'to:','r/trebuchetmemes','or','r/meirl','.'])
+	template(['Please',go,'to:','r/trebuchetmemes','or','r/meirl','.'])
 ]).
 
 category([

@@ -6,6 +6,17 @@
 
 :- consult([alice]).
 :- include(reddit).
+:- include(redditapi).
+:- include(redditauthorization).
+
+category([
+	pattern([yea]),
+	template([srai([yes])])
+]).
+category([
+	pattern([yep]),
+	template([srai([yes])])
+]).
 
 category([
 	pattern([can,you,star(A),'?']),
@@ -34,13 +45,6 @@ category([
 	template(['Why',would,'I',be,afraid,of,NP,'?!',',','I',am,a,'digital chatbot!'])
 ]).
 
-
-
-category([
-	pattern(['Do you think you are',star(A),'?']),
-	template(['I am a chatbot, ofcourse i am',A,'!?'])
-]).
-
 category([
 	pattern([star(_)]),
 	template([random([
@@ -62,10 +66,6 @@ category([
 	pattern([do,you,know,who,star(A),is,'?']),
 	template([srai([who,is,A,'?'])])
 ]).
-
-
-
-
 
 category([
 	pattern([how,much,is,star([A]),plus,star([B]),'?']),

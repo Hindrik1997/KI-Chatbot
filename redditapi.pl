@@ -7,11 +7,25 @@
 :- use_module(library('random')).
 
 
-% http://openweathermap.org/
-authorize(State) :-
- format(atom(HREF),'https://www.reddit.com/api/v1/authorize?client_id=aVosq81QzYxVxA&response_type=code&state=~s&redirect_uri=http://www.ruurdbijlsma.com&duration=permanent&scope=identity edit flair history modconfig modflair modlog modposts modwiki mysubreddits privatemessages read report save submit subscribe vote wikiedit wikiread',[State]),
- http_get(HREF,Json,[]),
- atom_json_term(Json,json(R),[]),
- member(main=json(W),R),
- member(temp=T,W),
- Temp is round(T - 273.15).
+
+acces_token(Code, Token) :- http_post('https://www.reddit.com/api/v1/access_token',
+          form([ 
+			grant_type='authorization_code',
+			code=Code,
+			redirect_uri='http://www.ruurdbijlsma.com/prolog.html'
+          ]),
+          Token,
+          []).
+
+
+
+get_state(State) :- random(0, 10000000000000000, State).
+
+state_link(Link) :- get_state(State),
+atom_concat('https://www.reddit.com/api/v1/authorize?client_id=aVosq81QzYxVxA&response_type=code&state=', State, First),
+atom_concat(First, '&redirect_uri=http://www.ruurdbijlsma.com/prolog.html&duration=permanent&scope=identity edit flair history modconfig modflair modlog modposts modwiki mysubreddits privatemessages read report save submit subscribe vote wikiedit wikiread', Link).
+
+authorize :- state_link(Link),
+	atom_concat('sensible-browser "', Link, First),
+	atom_concat(First, '"&', Command),
+	shell(Command).
