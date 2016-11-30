@@ -2,6 +2,7 @@
 
 :- use_module(library('http/http_client')).
 :- use_module(library('http/json')).
+:- use_module(library('www_browser')).
 
 :- consult([alice]).
 :- include(reddit).
@@ -110,13 +111,13 @@ mother_of(X,Y) :- female(X),
                   parent_of(X,Y).
 
 % http://openweathermap.org/
-temperature(City,Temp) :-
-	format(atom(HREF),'http://api.openweathermap.org/data/2.5/weather?q=~s',[City]),
-	http_get(HREF,Json,[]),
-	atom_json_term(Json,json(R),[]),
-	member(main=json(W),R),
-	member(temp=T,W),
-	Temp is round(T - 273.15).
+%temperature(City,Temp) :-
+%	format(atom(HREF),'http://api.openweathermap.org/data/2.5/weather?q=~q',[City]),
+%	http_get(HREF,Json,[]),
+%	atom_json_term(Json,json(R),[]),
+%	member(main=json(W),R),
+%	member(temp=T,W),
+%	Temp is round(T - 273.15).
 
 np --> art, noun.
 
