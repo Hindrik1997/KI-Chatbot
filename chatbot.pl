@@ -12,6 +12,11 @@ category([
 ]).
 
 category([
+	pattern(['is',star(A),'a','faggot','?']),
+	template(['reddit.com/r/', A])
+]).
+
+category([
 	pattern([who,is,alan,turing,'?']),
 	template(['Alan Mathison Turing',was,a,'British',mathematician,',',logician,',',cryptanalyst,',',philosopher,',',computer,scientist,',',mathematical,biologist,',',and,marathon,and,ultra,distance,runner,'.'])
 ]).
@@ -35,6 +40,12 @@ category([
 category([
 	pattern([how,much,is,star([A]),plus,star([B]),'?']),
 	template([think((C is A + B)),A,plus,B,is,C])
+]).
+
+category([
+	pattern(['hoe','warm','is',star(A),'?']),
+	template([think(temperature(A,Temp)),
+	    'The',temperature,in,A,is,Temp,degrees,celcius,'.'])
 ]).
 
 category([
@@ -122,4 +133,3 @@ np --> art, noun.
 art --> [the];[a];[an].
 
 noun --> [cat];[dog];[mouse];[rat];[table].
-
