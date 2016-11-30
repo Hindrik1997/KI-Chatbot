@@ -4,6 +4,7 @@
 :- use_module(library('http/json')).
 
 :- consult([alice]).
+:- include(reddit).
 
 category([
 	pattern([can,you,star(A),'?']),
@@ -62,7 +63,7 @@ category([
 	pattern([star(_),sound,star(_)]),
 	template(['Okay!',
 		think(process_create(path(play), ['emergency.mp3'], [stderr(null)]))])
-]). 
+]).
 
 category([
 	pattern([are,you,afraid,of,syntax(np,NP),'?']),
@@ -113,8 +114,8 @@ temperature(City,Temp) :-
 	format(atom(HREF),'http://api.openweathermap.org/data/2.5/weather?q=~s',[City]),
 	http_get(HREF,Json,[]),
 	atom_json_term(Json,json(R),[]),
-	member(main=json(W),R), 
-	member(temp=T,W), 
+	member(main=json(W),R),
+	member(temp=T,W),
 	Temp is round(T - 273.15).
 
 np --> art, noun.
@@ -122,4 +123,3 @@ np --> art, noun.
 art --> [the];[a];[an].
 
 noun --> [cat];[dog];[mouse];[rat];[table].
-
