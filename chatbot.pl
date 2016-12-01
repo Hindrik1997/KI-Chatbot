@@ -3,6 +3,7 @@
 :- use_module(library('http/http_client')).
 :- use_module(library('http/json')).
 :- use_module(library('www_browser')).
+:- use_module(library('random')).
 
 :- consult([alice]).
 :- include(reddit).
@@ -20,7 +21,7 @@ category([
 ]).
 
 category([
-	pattern([can,you,star(A),'?']),
+	pattern(['Can',you,star(A),'?']),
 	template(['I', 'don''t', really, know, if,'I','can', A,
 		but,'I''m',very,good,at,browsing,memes,all,day,long,'.'])
 ]).
@@ -44,9 +45,9 @@ category([
 category([
 	pattern([star(_)]),
 	template([random([
-		['So what is your favorite type of meme','?'],
-		['How often do you browse reddit','?'],
-		['What is the best subreddit in the world','?']])
+		['What',is,your,favorite,type,of,meme,'?'],
+		['How',often,do,you,browse,reddit,'?'],
+		['What',is,the,best,subreddit,in,the,world,'?']])
 	])
 ]).
 

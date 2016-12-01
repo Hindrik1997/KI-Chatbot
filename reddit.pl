@@ -1,8 +1,42 @@
 %todo: webserver voor prologger.html
 %authorization in prologger.html zetten
 
+list_contains(Item,[Item|Rest]).
+list_contains(Item,[_|Tail]):-
+	list_contains(Item,Tail).
+
+atom_contains(Part, Atom) :- 
+	sub_atom(Atom, _, _, _, A),
+	A == Part.
+
+excludes_part(Part, Atom) :- not(atom_contains(Part, Atom)).
+
+random_question(Question) :-
+	findall(Q, get_questions(Q), R),
+	random_member(Question, R).
+
+get_questions(Question) :- 
+	category(C),
+	List = C.pattern,
+	isQuestion(List),
+	atomic_list_concat(List, ' ', Question).
+
+isQuestion(List) :- 
+	last(List, Mark),
+	isQuestionMark(Mark),
+	not(List == [what,should,i,ask,'?']),
+	maplist(atom, List).
+
+isQuestionMark('?').
+
+%% Hoe doe je that pattern hier
 category([
-	pattern([can,you,show,me,a,picture,of,nature,'?']),
+	pattern([what,should,i,ask,'?']),
+	template(['Try','asking:',think(random_question(Q)),Q])
+]).
+
+category([
+	pattern(['Can',you,show,me,a,picture,of,nature,'?']),
 	template([please,go,to,'r/earthporn' ,'r/Natureporn',or,'r/Naturegifs','.'])
 ]).
 
