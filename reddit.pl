@@ -1,3 +1,6 @@
+%todo: webserver voor prologger.html
+%authorization in prologger.html zetten
+
 category([
 	pattern([can,you,show,me,a,picture,of,nature,'?']),
 	template([please,go,to,'r/earthporn' ,'r/Natureporn',or,'r/Naturegifs','.'])

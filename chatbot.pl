@@ -8,8 +8,7 @@
 :- include(reddit).
 :- include(redditapi).
 :- include(redditauthorization).
-:- include(werkendeserver).
-:- include(manualAlice).
+:- include(alice_server).
 
 category([
 	pattern([yea]),
@@ -23,13 +22,13 @@ category([
 category([
 	pattern([can,you,star(A),'?']),
 	template(['I', 'don''t', really, know, if,'I','can', A,
-		but,'I''m',very,good,at,browsing,meems,all,day,long,'.'])
+		but,'I''m',very,good,at,browsing,memes,all,day,long,'.'])
 ]).
 
 category([
 	pattern([yes]),
 	that([do, you, like, trebuchetmemes,'?']),
-	template(['What', is, your, favourite, meem, '?'])
+	template(['What', is, your, favourite, meme, '?'])
 ]).
 
 category([
@@ -39,13 +38,13 @@ category([
 
 category([
 	pattern([are,you,afraid,of,syntax(np,NP),'?']),
-	template(['Why',would,'I',be,afraid,of,NP,'?!',',','I',am,a,'digital chatbot!'])
+	template(['Why',would,'I',be,afraid,of,NP,'?!',',','I',am,a,digital,'chatbot!'])
 ]).
 
 category([
 	pattern([star(_)]),
 	template([random([
-		['So what is your favorite type of meem','?'],
+		['So what is your favorite type of meme','?'],
 		['How often do you browse reddit','?'],
 		['What is the best subreddit in the world','?']])
 	])

@@ -5,15 +5,14 @@ category([
 
 category([
 	pattern([yes]),
-	that(['Thanks',for,the,code,'!','It',was,Code,'right?']),
+	that(['Thanks',for,the,code,'!','It',was,star(_),'right?']),
 	template(['Great!,',you,are,now,logged,in,as])
 ]).
 category([
 	pattern([no]),
-	that(['Thanks',for,the,code,'!','It',was,Code,'right?']),
+	that(['Thanks',for,the,code,'!','It',was,star(_),'right?']),
 	template(['Please',try,pasting,the,code,again])
 ]).
-
 
 category([
 	pattern([the,code,is,star(A)]),
@@ -38,5 +37,5 @@ category([
 
 category([
 	pattern([star(_),'login',star(_)]),
-	template(['You',can,log,in,on,this,'page,',when,you,come,back,please,tell,me,the,code,think(authorize)])
+	template(['You',can,log,in,on,this,'page,',when,you,come,back,please,tell,me,your,code,think(authorize)])
 ]).
