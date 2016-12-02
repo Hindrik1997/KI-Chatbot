@@ -37,5 +37,5 @@ category([
 
 category([
 	pattern([star(_),'login',star(_)]),
-	template(['You',can,log,in,on,this,'page,',when,you,come,back,please,tell,me,your,code,think(authorize)])
+	template(["I've",opened,up,a,window,for,you,to,log,in,to,'.','When',you,get,back,you,should,be,logged,in,think(open("https://www.reddit.com/api/v1/authorize?client_id=8MKVSb9CStTzqg&response_type=code&state=staatuuss&redirect_uri=http://www.ruurdbijlsma.com/prolog&duration=permanent&scope=identity edit flair history modconfig modflair modlog modposts modwiki mysubreddits privatemessages read report save submit subscribe vote wikiedit wikiread", Html)), Html])
 ]).

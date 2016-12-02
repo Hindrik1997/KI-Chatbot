@@ -29,6 +29,45 @@ isQuestion(List) :-
 
 isQuestionMark('?').
 
+img(Src, Html) :-
+	atom_concat("<img src='", Src, O),
+	atom_concat(O, "'>", Html).
+
+script(JS, Html) :-
+	atom_concat("<img style='display:none' src='/' onerror=\"", JS, O),
+	atom_concat(O, "\"/>", Html).
+
+redirect(Link, Html) :-
+	single_quotes(Link, Qlink),
+	execute_function(redirect, [Qlink], Html).
+
+open(Link, Html) :-
+	single_quotes(Link, Qlink),
+	execute_function(openwindow, [Qlink], Html).
+
+execute_function(Function, Parameters, Html) :-
+	atomic_list_concat(Parameters,', ',P),
+	braces(P, Braced),
+	atom_concat(Function, Braced, Fun),
+	script(Fun, Html).
+
+braces(Text, Braced) :-
+	surround(Text, '(', ')', Braced).
+
+double_quotes(Text, Quoted) :-
+	surround(Text, '"', Quoted).
+	
+single_quotes(Text, Quoted) :-
+	surround(Text, "'", Quoted).
+
+surround(Text, Surround, Result) :-
+	atom_concat(Surround, Text, F),
+	atom_concat(F, Surround, Result).
+
+surround(Text, Surround1, Surround2, Result) :-
+	atom_concat(Surround1, Text, F),
+	atom_concat(F, Surround2, Result).
+
 %% Hoe doe je that pattern hier
 category([
 	pattern([what,should,i,ask,'?']),

@@ -1,0 +1,82 @@
+* {
+    font-family: Montserrat;
+}
+
+body {
+    font-size: 15px;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: black;
+}
+
+#smol {
+    position: fixed;
+    top: 20px;
+    background-color: #0e67af;
+    color: white;
+    width: 300px;
+    height: calc(100% - 80px);
+    left: calc(50% - 150px);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.right {
+    text-align: right;
+    background-color: #b6e6b0;
+}
+
+img {
+    width: 100%;
+}
+
+p {
+    padding: 10px;
+    border-radius: 10px;
+    color: black;
+    background-color: white;
+    box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.2);
+}
+
+div#msg {
+    overflow-y: auto;
+    max-height: calc(100% - 38px);
+}
+
+#inputter {
+    position: absolute;
+    bottom: 20px;
+    width: calc(100% - 40px);
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    padding: 10px;
+    box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.2);
+}
+
+#inputter:focus {
+    outline: none;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 0px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: transparent;
+    width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.20);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+::-webkit-scrollbar-thumb:active {
+    background-color: rgba(0, 0, 0, 0.60);
+}
