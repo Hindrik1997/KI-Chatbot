@@ -19,6 +19,25 @@ function init() {
     });
 }
 
+function request(type, url, data) {
+    return new Promise(function(resolve) {
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState === 4)
+                resolve(this.responseText);
+        };
+
+        let requestParams = [];
+        for (let prop in data)
+            requestParams.push(prop + '=' + data[prop]);
+
+        requestParams = requestParams.join('&');
+        xhttp.open(type, url, true);
+        xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhttp.send(requestParams);
+    })
+}
+
 function createSocket() {
     return new Promise(resolve => {
         let socket = new WebSocket('ws://localhost:3333/ws');
@@ -35,9 +54,9 @@ function receiveMessage(message) {
     removeImages();
 }
 
-function removeImages(){
+function removeImages() {
     let imgs = document.getElementsByTagName('img');
-    for(let img of imgs)
+    for (let img of imgs)
         img.remove();
 }
 
