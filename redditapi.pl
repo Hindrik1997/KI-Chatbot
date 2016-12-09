@@ -1,12 +1,15 @@
 :- use_module(library('http/http_client')).
 :- use_module(library('http/http_open')).
 :- use_module(library('http/json')).
+:- use_module(library('http/json_convert')).
 :- use_module(library('xpath')).
 :- use_module(library('sgml')).
 :- use_module(library('http/http_dispatch')).
 :- use_module(library('random')).
 
+
 :- dynamic reddit_code/1.
+:- dynamic reddit_token/1.
 
 acces_token(Code, Token) :- 
 	http_post('https://www.reddit.com/api/v1/access_token',
@@ -15,6 +18,24 @@ acces_token(Code, Token) :-
 			code(Code),
 			redirect_uri('http://www.ruurdbijlsma.com/prolog')
 		], Token, []).
+	
+get_token(Code, Token) :-
+	http_open(
+		'https://www.reddit.com/api/v1/access_token',
+		Token, 
+		[
+			post(
+				form([
+					grant_type(authorization_code),
+					code(Code),
+					redirect_uri('http://www.ruurdbijlsma.com/prolog')
+				])
+			),
+			authorzation(
+				basic('8MKVSb9CStTzqg', 'orM09nyTv7x0nD947-CbtgHrDWo')
+			)
+		]
+	).
 
 
 

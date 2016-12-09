@@ -36,7 +36,7 @@ next_train_from_to(From,To,Time) :-
  xpath(P,//'VertrekTijd',element('VertrekTijd', [], [Time])).
 
 % http://www.omdbapi.com/
-director(Name, Result) :-
+director(Name, Result, Json) :-
         format(atom(HREF), 'http://www.omdbapi.com?t=~s', [Name]),
         http_get(HREF,Json,[]),
         atom_json_term(Json, json(R),[]),

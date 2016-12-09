@@ -1,3 +1,5 @@
+:- discontiguous category/1.
+
 category([
 	pattern(['Do you think you are',star(A),'?']),
 	template(['I am a chatbot, ofcourse i am',A,'!?'])

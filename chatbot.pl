@@ -10,11 +10,15 @@
 :- include(redditapi).
 :- include(redditauthorization).
 :- include(alice_server).
+:- include(webapi).
+
+:- discontiguous category/1.
 
 category([
 	pattern([yea]),
 	template([srai([yes])])
 ]).
+
 category([
 	pattern([yep]),
 	template([srai([yes])])

@@ -16,6 +16,11 @@ main :-
 extract_code(Message, Code) :-
 	sub_string(Message, 16, _, 0, Code).
 
+token_from_json(Json, Token) :-
+	atom_codes(AJson, Json),
+	atom_json_term(AJson, json(List),[]),
+	member('access_token'=Token,List).
+
 receiveSocket(WebSocket) :-
 	ws_receive(WebSocket, Message),
 	(	Message.opcode == close
@@ -24,9 +29,12 @@ receiveSocket(WebSocket) :-
 		(	atom_contains('secret_code_here', M) %% If text contains secret code
 			->	print(['Message', M]), %% Handle secret code
 				extract_code(M, Code),
-				print(['de geheime code isss', Code]), %% Handle secret code
-				ws_send(WebSocket, text('secret_code_here_succes')),
-				assertz(reddit_code(Code))
+				ws_send(WebSocket, text('secret_code_received_successfully')),
+				retract(reddit_code(_)),
+				assertz(reddit_code(Code)),
+				token_from_json(Code, Token),
+				retract(reddit_token(_)),
+				assertz(reddit_token(Token))
 			;	print([input, M]), %% If text doesnt contain secret code, answer it
 				ask(M, Reply),
 				print([ouput, Reply]),

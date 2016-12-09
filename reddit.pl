@@ -1,7 +1,7 @@
 %todo: webserver voor prologger.html
 %authorization in prologger.html zetten
 
-list_contains(Item,[Item|Rest]).
+list_contains(Item,[Item|_]).
 list_contains(Item,[_|Tail]):-
 	list_contains(Item,Tail).
 
@@ -69,6 +69,8 @@ surround(Text, Surround1, Surround2, Result) :-
 	atom_concat(F, Surround2, Result).
 
 %% Hoe doe je that pattern hier
+:- discontiguous category/1.
+
 category([
 	pattern([what,should,i,ask,'?']),
 	template(['Try','asking:',think(random_question(Q)),Q])
