@@ -1,18 +1,26 @@
 <?php
- 	$url = 'https://www.reddit.com/api/v1/access_token';
+ 	$username = '8MKVSb9CStTzqg';
+ 	$password = 'orM09nyTv7x0nD947-CbtgHrDWo';
 
-	// use key 'http' even if you send the request to https://...
+	$postvals = http_build_query($_POST);
+
+	$ch = curl_init("https://www.reddit.com/api/v1/access_token");
 	$options = array(
-	    'http' => array(
-	        'header'  => 'Content-type: application/x-www-form-urlencoded',
-	        'method'  => 'POST',
-	        'content' => http_build_query($_POST)
-	    )
+	    CURLOPT_RETURNTRANSFER => true,
+	    CURLOPT_CONNECTTIMEOUT => 5,
+	    CURLOPT_TIMEOUT => 10,
+	    CURLOPT_USERAGENT => "Prolog test",
+	    CURLOPT_POST => true,
+	    CURLOPT_POSTFIELDS => $postvals,
+	    CURLOPT_HTTPAUTH => CURLAUTH_BASIC,
+	    CURLOPT_USERPWD => $username .":". $password
 	);
-	$context  = stream_context_create($options);
-	$result = file_get_contents($url, false, $context);
+	curl_setopt_array($ch, $options);
 
-	var_dump($_POST);
-	var_dump(http_build_query($_POST));
-	var_dump($result);
+	$api_response = curl_exec($ch);
+	$response = json_decode($api_response);
+	curl_close($ch);
+
+	echo $api_response;
+	// var_dump($response);
 ?>

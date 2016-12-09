@@ -10,14 +10,21 @@ function init() {
             let code = location.search.split('code=')[1];
             if (code.includes('&'))
                 code = code.split('&')[1];
-            console.log('code is', code);
-            socket.send('secret_code_here' + code);
-            socket.onmessage = msg => {
-                window.close();
-            };
+            request('POST', 'http://www.ruurdbijlsma.com/prolog/post.php', {
+                grant_type: 'authorization_code',
+                code: code,
+                redirect_uri: 'http://www.ruurdbijlsma.com/prolog'
+            }).then(json => {
+                socket.send('secret_code_here' + json);
+                console.log('json: ', json, JSON.parse(json));
+                socket.onmessage = msg => {
+                    window.close();
+                };
+            });
         }
     });
 }
+
 
 function request(type, url, data) {
     return new Promise(function(resolve) {
