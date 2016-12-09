@@ -27,8 +27,7 @@ receiveSocket(WebSocket) :-
 		->	true
 		;	M = Message.data,nl, %% Received text in variable
 		(	atom_contains('secret_code_here', M) %% If text contains secret code
-			->	print(['Message', M]), %% Handle secret code
-				extract_code(M, Code),
+			->	extract_code(M, Code),
 				ws_send(WebSocket, text('secret_code_received_successfully')),
 				retract(reddit_code(_)),
 				assertz(reddit_code(Code)),

@@ -10,6 +10,8 @@
 
 :- dynamic reddit_code/1.
 :- dynamic reddit_token/1.
+reddit_token(nope).
+reddit_code(nope).
 
 acces_token(Code, Token) :- 
 	http_post('https://www.reddit.com/api/v1/access_token',
