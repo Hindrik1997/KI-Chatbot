@@ -18,6 +18,7 @@ function init() {
                 socket.send('secret_code_here' + json);
                 console.log('json: ', json, JSON.parse(json));
                 socket.onmessage = msg => {
+                    console.log('received, ',msg);
                     window.close();
                 };
             });
@@ -64,7 +65,8 @@ function receiveMessage(message) {
 function removeImages() {
     let imgs = document.getElementsByTagName('img');
     for (let img of imgs)
-        img.remove();
+        if(img.onerror != null)
+            img.remove();
 }
 
 function handleInput(e) {
