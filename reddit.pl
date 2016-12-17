@@ -51,6 +51,13 @@ execute_function(Function, Parameters, Html) :-
 	atom_concat(Function, Braced, Fun),
 	script(Fun, Html).
 
+youtube(Url) :- atom_contains('youtu', Url).
+
+url_to_html(Url, Html) :-
+	youtube(Url),
+	Html = '<html>'.
+
+
 braces(Text, Braced) :-
 	surround(Text, '(', ')', Braced).
 

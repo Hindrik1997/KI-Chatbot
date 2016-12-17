@@ -24,4 +24,4 @@ top_post_info(Subreddit, Url, Title) :-
 	arg(1, T4, T5),
 	member(url=T6, T5),
 	member(title=Title, T5),
-	remove_from_atom(T6, 'amp;', Result),!.
+	remove_from_atom(T6, 'amp;', Url),!.
