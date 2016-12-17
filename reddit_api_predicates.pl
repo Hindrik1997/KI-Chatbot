@@ -25,3 +25,12 @@ top_post_info(Subreddit, Url, Title) :-
 	member(url=T6, T5),
 	member(title=Title, T5),
 	remove_from_atom(T6, 'amp;', Url),!.
+
+get_random_sub(Url) :-
+	http_open('https://www.reddit.com/r/random.json', Stream, []),
+	json_read(Stream, json(List), []),
+	member(data=Data, List),
+	arg(1, Data, Info),
+	member(children=Children, Info),
+	arg(1, Children, T0),
+	member(data=Url, T0).
