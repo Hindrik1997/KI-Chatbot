@@ -48,18 +48,6 @@ category([
 ]).
 
 category([
-	pattern([star(_)]),
-	template([random([
-		['What',is,your,favorite,type,of,meme,'?'],
-		['How',often,do,you,browse,reddit,'?'],
-		['What',is,the,best,subreddit,in,the,world,'?']])
-	])
-]).
-
-/*
-
-
-category([
 	pattern([who,is,alan,turing,'?']),
 	template(['Alan Mathison Turing',was,a,'British',mathematician,',',logician,',',cryptanalyst,',',philosopher,',',computer,scientist,',',mathematical,biologist,',',and,marathon,and,ultra,distance,runner,'.'])
 ]).
@@ -74,17 +62,6 @@ category([
 	template([think((C is A + B)),A,plus,B,is,C])
 ]).
 
-category([
-	pattern(['hoe','warm','is',star(A),'?']),
-	template([think(temperature(A,Temp)),
-	    'The',temperature,in,A,is,Temp,degrees,celcius,'.'])
-]).
-
-category([
-	pattern([star(_),temperature,star(_),in,star([City]),'?']),
-	template([think(temperature(City,Temp)),
-	    'The',temperature,in,City,is,Temp,degrees,celcius,'.'])
-]).
 
 category([
 	pattern([is,star([Person]),female,'?']),
@@ -107,9 +84,14 @@ category([
 		think(process_create(path(play), ['emergency.mp3'], [stderr(null)]))])
 ]).
 
-
-
-
+category([
+	pattern([star(_)]),
+	template([random([
+		['What',is,your,favorite,type,of,meme,'?'],
+		['How',often,do,you,browse,reddit,'?'],
+		['What',is,the,best,subreddit,in,the,world,'?']])
+	])
+]).
 
 % Family tree
 female(helen).
