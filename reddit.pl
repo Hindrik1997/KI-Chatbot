@@ -51,20 +51,49 @@ execute_function(Function, Parameters, Html) :-
 	atom_concat(Function, Braced, Fun),
 	script(Fun, Html).
 
-youtube(Url) :- atom_contains('youtu', Url).
+youtube(Url) :- atom_contains('youtu.be', Url).
+youtube(Url) :- atom_contains('youtube', Url).
 
-image(Url) :- atom_contains('imgur', Url).
-image(Url) :- atom_contains('media.tumblr', Url).
-image(Url) :- atom_contains('reddituploads', Url).
-image(Url) :- atom_contains('redditmedia', Url).
-image(Url) :- atom_contains('i.redd.it', Url).
+image(Url) :- atom_contains('.png', Url).
+image(Url) :- atom_contains('.jpg', Url).
+image(Url) :- atom_contains('.gif', Url).
+image(Url) :- atom_contains('.webp', Url).
+image(Url) :- atom_contains('.jpeg', Url).
+image(Url) :- atom_contains('i.reddituploads', Url).
+image(Url) :- atom_contains('500px', Url).
+
+video(Url) :- atom_contains('.webm', Url).
 
 gfycat(Url) :- atom_contains('://gfycat', Url).
 
+imgur(Url) :- atom_contains('://imgur', Url).
+
 url_to_html(Url, Html) :-
 	youtube(Url),
-	format(atom(Html), '<iframe width="560" height="315" src="~s" frameborder="0" allowfullscreen></iframe>', Url).
+	remove_from_atom(Url, 'https://www.youtube.com/watch?v=', Arg),
+	atom_concat('https://www.youtube.com/embed/', Arg, Out),
+	format(atom(Html), '<iframe width="560" height="315" src="~s" frameborder="0" allowfullscreen></iframe>', Out),!.
 
+url_to_html(Url, Html) :-
+	image(Url),
+	format(atom(Html), '<img src="~s"></img>', Url),!.
+
+url_to_html(Url, Html) :-
+	video(Url),
+	format(atom(Html), '<video autoplay src="~s"></video>', Url),!.
+
+url_to_html(Url, Html) :-
+	imgur(Url),
+	format(atom(Html), '<img src="~s.png"></img>', Url),!.
+
+url_to_html(Url, Html) :-
+	gfycat(Url),
+	remove_from_atom(Url, 'https://', Arg),
+	atom_concat('https://giant.', Arg, Out),
+	format(atom(Html), '<video autoplay src="~s.webm"></video>', Out),!.
+
+url_to_html(Url, Html) :-
+	format(atom(Html), '<a href="~s">Link</a>', Url),!.
 
 braces(Text, Braced) :-
 	surround(Text, '(', ')', Braced).
@@ -97,30 +126,85 @@ remove_from_atom(Atom, Replace, Out) :-
 :- dynamic likes/1.
 
 category([
-	pattern(['How',much,karma,does,star(A),have,'?']),
-	template([think(user_karma(A, LinkKarma, CommentKarma)),A,has,LinkKarma,link,karma,and,CommentKarma,comment,karma])
+	pattern([show,me,star(A)]),
+	template([srai([can,you,show,me,A,'?'])])
 ]).
+
+%%---------------------------------------------------------------------------------------------------------------------%%%
 
 category([
 	pattern(['How',much,karma,does,star(A),have,'?']),
 	template([think(user_karma(A, LinkKarma, CommentKarma)),A,has,LinkKarma,link,karma,and,CommentKarma,comment,karma])
 ]).
 
-%% Hoe doe je that pattern hier
+%%---------------------------------------------------------------------------------------------------------------------%%%
+
+category([
+	pattern([can,you,show,me,a,random,post]),
+	template([srai([can,you,show,me,a,random,post,from,all])])
+]).
+
+category([
+	pattern([can,you,show,me,a,random,post,syntax(onfromof,_),star(A)]),
+	template([think(random_post_html(A, Html, Title)), 'This',looks,like,a,nice,random,'post:',Html,'It\'s',titled,Title])
+]).
+
+category([
+	pattern([can,you,show,me,a,random,star(A),post]),
+	template([think(random_post_html(A, Html, Title)), 'This',looks,like,a,nice,random,'post:',Html,'It\'s',titled,Title])
+]).
+
+%%---------------------------------------------------------------------------------------------------------------------%%%
+
+category([
+	pattern([can,you,show,me,the,syntax(verygood, Top),post,syntax(onfromof,From),star(A)]),
+	template([srai([what,is,the,Top,post,From,A,'?'])])
+]).
+
+category([
+	pattern([what,is,the,syntax(verygood, _),post,syntax(onfromof,_),star(A),'?']),
+	template([think(top_post_html(A, Html, Title)), 'Here',it,'is:',Html,'It\'s',titled,Title])
+]).
+onfromof --> [on];[from];[of].
+verygood --> [top];[best].
+
+%%---------------------------------------------------------------------------------------------------------------------%%%
+
 category([
 	pattern(['I',like,star(A)]),
 	template(['I',will,remember,that,you,like,A,think(assertz(likes(A)))])
 ]).
 
 category([
+	pattern(['Do','I',like,star(A),'?']),
+	template([think(ifelse(likes(A), 'Yes you like', 'No you dont like', Out)),Out,A])
+]).
+
+%%---------------------------------------------------------------------------------------------------------------------%%%
+
+category([
 	pattern([what,should,i,ask,'?']),
 	template(['Try','asking:',think(random_question(Q)),Q])
 ]).
 
+%%---------------------------------------------------------------------------------------------------------------------%%%
+
 category([
 	pattern(['Can',you,show,me,a,picture,of,nature,'?']),
-	template([please,go,to,'r/earthporn' ,'r/Natureporn',or,'r/Naturegifs','.'])
+	template([think(random_post_html(natureporn, Html, Title)), 'I',found,this,great,'picture:',Html,'It\'s',titled,Title])
 ]).
+
+category([
+	pattern(['Can',you,show,me,a,picture,of,earth,'?']),
+	template([think(random_post_html(earthporn, Html, Title)), 'I',found,this,great,'picture:',Html,'It\'s',titled,Title])
+]).
+
+category([
+	pattern(['Can',you,show,me,weather,gifs,'?']),
+	template([think(random_post_html(weathergifs, Html, Title)), 'I',found,this,'gif:',Html,'It\'s',titled,Title])
+]).
+
+%%---------------------------------------------------------------------------------------------------------------------%%%
 
 category([
 	pattern([is,reddit,better,than,star(A),'?']),

@@ -49,7 +49,7 @@ category([
 
 category([
 	pattern([who,is,alan,turing,'?']),
-	template(['Alan Mathison Turing',was,a,'British',mathematician,',',logician,',',cryptanalyst,',',philosopher,',',computer,scientist,',',mathematical,biologist,',',and,marathon,and,ultra,distance,runner,'.'])
+	template(['Alan',turing,is,a,user,on,reddit,think(user_karma(alanturing, L, C)),with,L,link,karma,and,C,comment,karma,'.','He',is,also,a,famous,'British',mathematician,with,a,subreddit,dedicated,to,him,'.','Here',is,a,post,from,'/r/alanturing',think(random_post_html(alanturing, Html, Title)),Html,'It\'s','titled:',Title])
 ]).
 
 category([
