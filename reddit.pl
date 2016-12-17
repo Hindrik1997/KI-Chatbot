@@ -68,8 +68,42 @@ surround(Text, Surround1, Surround2, Result) :-
 	atom_concat(Surround1, Text, F),
 	atom_concat(F, Surround2, Result).
 
-%% Hoe doe je that pattern hier
+ifelse(Condition, True, False, Out):-
+	Condition ->
+	Out = True
+	;
+	Out = False.
+
+remove_from_atom(Atom, Replace, Out) :-
+	atomic_list_concat(List, Replace, Atom),
+	concat_atom(List, Out).
+
 :- discontiguous category/1.
+:- dynamic likes/1.
+
+category([
+	pattern(['How',much,does,star(A),have]),
+	Question = [rutenl, has, 982, link, karma, and, 340, comment, karma],
+	%% ifelse(context(Question), Question, [jfdjdfj], Out),
+	that([think(print(Question))]),
+	template([think(ifelse(likes(A), 'Yes you like', 'No you dont like', Response)),Response,A])
+]).
+
+category([
+	pattern(['How',much,karma,does,star(A),have,'?']),
+	template([think(user_karma(A, LinkKarma, CommentKarma)),A,has,LinkKarma,link,karma,and,CommentKarma,comment,karma])
+]).
+
+category([
+	pattern(['How',much,karma,does,star(A),have,'?']),
+	template([think(user_karma(A, LinkKarma, CommentKarma)),A,has,LinkKarma,link,karma,and,CommentKarma,comment,karma])
+]).
+
+%% Hoe doe je that pattern hier
+category([
+	pattern(['I',like,star(A)]),
+	template(['I',will,remember,that,you,like,A,think(assertz(likes(A)))])
+]).
 
 category([
 	pattern([what,should,i,ask,'?']),

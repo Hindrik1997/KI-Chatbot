@@ -9,6 +9,7 @@
 :- include(reddit).
 :- include(redditapi).
 :- include(redditauthorization).
+:- include(reddit_api_predicates).
 :- include(alice_server).
 :- include(webapi).
 
