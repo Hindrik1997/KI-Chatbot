@@ -57,3 +57,12 @@ random_post_html(Subreddit, Html, Title) :-
 	random_post_info(Fixed, U, Title),
 	fix_reddit_url(U, Url),
 	url_to_html(Url, Html).
+
+get_random_sub(Url) :-
+	http_open('https://www.reddit.com/r/random.json', Stream, []),
+	json_read(Stream, json(List), []),
+	member(data=Data, List),
+	arg(1, Data, Info),
+	member(children=Children, Info),
+	arg(1, Children, T0),
+	member(data=Url, T0).

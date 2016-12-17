@@ -172,7 +172,7 @@ verygood --> [top];[best].
 
 category([
 	pattern(['I',like,star(A)]),
-	template(['I',will,remember,that,you,like,A,think(assertz(likes(A)))])
+	template(['Because',you,like,A,'I',found,a,great,post,from,the,A,subreddit,think(assertz(likes(A))),think(random_post_html(A, Html, Title)),Html,'It\'s',titled,Title])
 ]).
 
 category([
