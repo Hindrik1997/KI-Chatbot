@@ -122,7 +122,7 @@ father_of(X,Y) :- male(X),
                   parent_of(X,Y).
 mother_of(X,Y) :- female(X),
                   parent_of(X,Y).
-*/
+
 % http://openweathermap.org/
 %temperature(City,Temp) :-
 %	format(atom(HREF),'http://api.openweathermap.org/data/2.5/weather?q=~q',[City]),

@@ -59,9 +59,11 @@ image(Url) :- atom_contains('reddituploads', Url).
 image(Url) :- atom_contains('redditmedia', Url).
 image(Url) :- atom_contains('i.redd.it', Url).
 
+gfycat(Url) :- atom_contains('://gfycat', Url).
+
 url_to_html(Url, Html) :-
 	youtube(Url),
-	Html = '<html>',!.
+	format(atom(Html), '<iframe width="560" height="315" src="~s" frameborder="0" allowfullscreen></iframe>', Url).
 
 
 braces(Text, Braced) :-
