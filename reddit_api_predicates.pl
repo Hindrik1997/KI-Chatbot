@@ -20,7 +20,7 @@ random_post_info(Subreddit, Url, Title) :-
 	fix_reddit_url(Out.data.url, Url),
 	Title=Out.data.title,!.
 
-top_post_info(Subreddit, Url, Title, Self) :-
+top_post_info(Subreddit, Url, Title) :-
 	format(atom(HREF), 'https://www.reddit.com/r/~s/top.json?limit=1&t=all', Subreddit),
 	http_open(HREF, Stream, []),
 	json_read(Stream, json(List), []),
@@ -31,7 +31,7 @@ top_post_info(Subreddit, Url, Title, Self) :-
 	arg(1, T2, T3),
 	member(data=T4, T3),
 	arg(1, T4, T5),
-	member(is_self=Self, T5),
+	%% member(is_self=Self, T5),
 	member(url=Url, T5),
 	member(title=Title, T5),!.
 
