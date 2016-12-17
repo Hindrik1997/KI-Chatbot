@@ -53,9 +53,15 @@ execute_function(Function, Parameters, Html) :-
 
 youtube(Url) :- atom_contains('youtu', Url).
 
+image(Url) :- atom_contains('imgur', Url).
+image(Url) :- atom_contains('media.tumblr', Url).
+image(Url) :- atom_contains('reddituploads', Url).
+image(Url) :- atom_contains('redditmedia', Url).
+image(Url) :- atom_contains('i.redd.it', Url).
+
 url_to_html(Url, Html) :-
 	youtube(Url),
-	Html = '<html>'.
+	Html = '<html>',!.
 
 
 braces(Text, Braced) :-
@@ -87,14 +93,6 @@ remove_from_atom(Atom, Replace, Out) :-
 
 :- discontiguous category/1.
 :- dynamic likes/1.
-
-category([
-	pattern(['How',much,does,star(A),have]),
-	Question = [rutenl, has, 982, link, karma, and, 340, comment, karma],
-	%% ifelse(context(Question), Question, [jfdjdfj], Out),
-	that([think(print(Question))]),
-	template([think(ifelse(likes(A), 'Yes you like', 'No you dont like', Response)),Response,A])
-]).
 
 category([
 	pattern(['How',much,karma,does,star(A),have,'?']),
