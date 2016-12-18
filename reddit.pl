@@ -296,7 +296,12 @@ category([
 
 category([
 	pattern(['Give',me,a,random,subreddit]),
-	template([think(get_random_sub(Sub)),think(reddit_url(Sub,Html)),think(link_url(Html, Html2)),Sub,' ',Html2])
+	template([think(get_random_sub(Sub)),think(reddit_url(Sub,Html)),think(link_url(Html, Html2)),"Here is a random subreddit: ",Sub,' ',Html2])
+]).
+
+category([
+	pattern(['Tell',me,the,top,post]),
+	template(think(context(A)))
 ]).
 
 %--------------------------------------------------------------------------------------------------------------------
