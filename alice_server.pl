@@ -29,14 +29,12 @@ receiveSocket(WebSocket) :-
 		(	atom_contains('secret_code_here', M) %% If text contains secret code
 			->	extract_code(M, Code),
 				ws_send(WebSocket, text('secret_code_received_successfully')),
-				retract(reddit_code(_)),
-				assertz(reddit_code(Code)),
 				token_from_json(Code, Token),
-				retract(reddit_token(_)),
-				assertz(reddit_token(Token))
-			;	print([input, M]), %% If text doesnt contain secret code, answer it
+				set_var(token, Token)
+			;	
+				%% print([input, M]), %% If text doesnt contain secret code, answer it
 				ask(M, Reply),
-				print([ouput, Reply]),
+				%% print([ouput, Reply]),
 				ws_send(WebSocket, text(Reply)),
 				receiveSocket(WebSocket)
 		)

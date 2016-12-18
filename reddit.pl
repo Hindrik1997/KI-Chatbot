@@ -25,6 +25,8 @@ isQuestion(List) :-
 	last(List, Mark),
 	isQuestionMark(Mark),
 	not(List == [what,should,i,ask,'?']),
+	not(List == [what,else,should,i,ask,'?']),
+	not(List == [what,else,could,i,ask,'?']),
 	maplist(atom, List).
 
 isQuestionMark('?').
@@ -64,7 +66,10 @@ image(Url) :- atom_contains('500px', Url).
 
 video(Url) :- atom_contains('.webm', Url).
 
-gfycat(Url) :- atom_contains('://gfycat', Url).
+httpsgfycat(Url) :- atom_contains('https://gfycat', Url).
+httpgfycat(Url) :- atom_contains('http://gfycat', Url).
+
+gifv(Url) :- atom_contains('.gifv', Url).
 
 imgur(Url) :- atom_contains('://imgur', Url).
 
@@ -83,13 +88,25 @@ url_to_html(Url, Html) :-
 	format(atom(Html), '<video autoplay src="~s"></video>', Url),!.
 
 url_to_html(Url, Html) :-
+	gifv(Url),
+	remove_from_atom(Url, gifv, Arg),
+	atom_concat(Arg, webm, Out),
+	format(atom(Html), '<video autoplay src="~s"></video>', Out),!.
+
+url_to_html(Url, Html) :-
 	imgur(Url),
 	format(atom(Html), '<img src="~s.png"></img>', Url),!.
 
 url_to_html(Url, Html) :-
-	gfycat(Url),
+	httpsgfycat(Url),
 	remove_from_atom(Url, 'https://', Arg),
 	atom_concat('https://giant.', Arg, Out),
+	format(atom(Html), '<video autoplay src="~s.webm"></video>', Out),!.
+
+url_to_html(Url, Html) :-
+	httpgfycat(Url),
+	remove_from_atom(Url, 'http://', Arg),
+	atom_concat('http://giant.', Arg, Out),
 	format(atom(Html), '<video autoplay src="~s.webm"></video>', Out),!.
 
 url_to_html(Url, Html) :-
@@ -122,8 +139,28 @@ remove_from_atom(Atom, Replace, Out) :-
 	atomic_list_concat(List, Replace, Atom),
 	concat_atom(List, Out).
 
+previous_answer(Answer) :-
+	context(A),
+	arg(1,A,B),
+	tokenise_atom(B,Answer).
+
 :- discontiguous category/1.
 :- dynamic likes/1.
+
+%%---------------------------------------------------------------------------------------------------------------------%%%
+
+category([
+	pattern([star(A)]),
+	that(['What',is,your,favorite,type,of,post,'?']),
+	template(['Heres',a,great,post,about,A,':',think(top_post_html(A, H, T)), H, 'it\'s', 'titled:',T])
+]).
+category([
+	pattern([star(A)]),
+	that(['What',is,the,best,subreddit,in,the,world,'?']),
+	template(['Heres',a,great,post,from,A,':',think(top_post_html(A, H, T)), H, 'it\'s', 'titled:',T])
+]).
+
+%%---------------------------------------------------------------------------------------------------------------------%%%
 
 category([
 	pattern([show,me,star(A)]),
@@ -150,7 +187,7 @@ category([
 ]).
 
 category([
-	pattern([can,you,show,me,a,random,star(A),post]),
+	pattern([can,you,show,me,a,random,star(A),post,'?']),
 	template([think(random_post_html(A, Html, Title)), 'This',looks,like,a,nice,random,'post:',Html,'It\'s',titled,Title])
 ]).
 
@@ -162,9 +199,10 @@ category([
 ]).
 
 category([
-	pattern([what,is,the,syntax(verygood, _),post,syntax(onfromof,_),star(A),'?']),
+	pattern([syntax(whats, _),the,syntax(verygood, _),post,syntax(onfromof,_),star(A),'?']),
 	template([think(top_post_html(A, Html, Title)), 'Here',it,'is:',Html,'It\'s',titled,Title])
 ]).
+whats --> [whats];['what\'s'];[what,is].
 onfromof --> [on];[from];[of].
 verygood --> [top];[best].
 
@@ -183,11 +221,23 @@ category([
 %%---------------------------------------------------------------------------------------------------------------------%%%
 
 category([
+	pattern([what,else,should,i,ask,'?']),
+	template([srai([what,should,i,ask,'?'])])
+]).
+
+category([
 	pattern([what,should,i,ask,'?']),
 	template(['Try','asking:',think(random_question(Q)),Q])
 ]).
 
+category([
+	pattern([what,else,could,i,ask,'?']),
+	template(['Try','asking:',think(random_question(Q)),Q])
+]).
+
 %%---------------------------------------------------------------------------------------------------------------------%%%
+
+question --> ['?'];[].
 
 category([
 	pattern(['Can',you,show,me,a,picture,of,nature,'?']),
@@ -204,6 +254,29 @@ category([
 	template([think(random_post_html(weathergifs, Html, Title)), 'I',found,this,'gif:',Html,'It\'s',titled,Title])
 ]).
 
+category([
+	pattern(['Can',you,show,me,a,weather,gif,'?']),
+	template([think(random_post_html(weathergifs, Html, Title)), 'I',found,this,'gif:',Html,'It\'s',titled,Title])
+]).
+
+category([
+	pattern(['Can',you,tell,me,a,fact,'?']),
+	template([think(random_post_html(todayilearned, Html, Title)),Title,'This',is,the,source,'I',found,for,this,'fact.',Html])
+]).
+
+category([
+	pattern([tell,me,another,one]),
+	template([
+		think(print([0,jajaj])),%%hij komt maar hier :(:(:(:(:(::(::(:(:(:(:(::(:(::(:()))))))))))))))
+		think(previous_answer(Prev)),
+		think(print([1,jajaj,Prev])),
+		think(arg(1,Prev,Id)),
+		think(print([2,jajaj,Prev, Id])),
+		Id==til,
+		think(random_post_html(todayilearned, Html, Title)),
+		Title,'This',is,the,source,'I',found,for,this,'fact.',Html])
+]).
+
 %%---------------------------------------------------------------------------------------------------------------------%%%
 
 category([
@@ -217,12 +290,12 @@ category([
 ]).
 
 category([
-	pattern(['What',is,reddit,'?']),
+	pattern([syntax(whats, _),reddit,'?']),
 	template(['Reddit',is,a,social,news,website,on,which,users,can,post,posts,and,users,can,upvote,posts,or,subscribe,to,subreddits,'.'])
 ]).
 
 category([
-	pattern(['Where',can,i,find,funny,memes,'?']),
+	pattern(['Where',can,i,find,some,memes,'?']),
 	template(['Please',go,'to:','r/trebuchetmemes','or','r/meirl','.'])
 ]).
 

@@ -62,35 +62,18 @@ category([
 	template([think((C is A + B)),A,plus,B,is,C])
 ]).
 
-
 category([
-	pattern([is,star([Person]),female,'?']),
-	template([think(female(Person)),'Yes, ',she,is,'!'])
-]).
-
-category([
-	pattern([is,star([Person]),female,'?']),
-	template([think(not(female(Person))),'No, ',Person,is,not,female])
-]).
-
-category([
-	pattern([who,is,the,father,of,star([Person]),'?']),
-	template([think(father_of(Father,Person)),Father,is,the,father,of,Person])
-]).
-
-category([
-	pattern([star(_),sound,star(_)]),
-	template(['Okay!',
-		think(process_create(path(play), ['emergency.mp3'], [stderr(null)]))])
-]).
-
-category([
-	pattern([star(_)]),
-	template([random([
-		['What',is,your,favorite,type,of,meme,'?'],
-		['How',often,do,you,browse,reddit,'?'],
+	pattern([star(_),'?']),
+	template([think(random_question(Q)), random([
+		['What',is,your,favorite,type,of,post,'?'],
+		['Did',you,know,you,can,ask,'me:',Q],
 		['What',is,the,best,subreddit,in,the,world,'?']])
 	])
+]).
+
+category([
+	pattern([star(A)]),
+	template([srai([A, '?'])])
 ]).
 
 % Family tree
