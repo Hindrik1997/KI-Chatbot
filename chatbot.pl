@@ -28,7 +28,7 @@ category([
 category([
 	pattern(['Can',you,star(A),'?']),
 	template(['I', 'don''t', really, know, if,'I','can', A,
-		but,'I''m',very,good,at,browsing,memes,all,day,long,'.'])
+		but,'I''m',very,good,at,browsing,reddit,all,day,long,'.'])
 ]).
 
 category([
