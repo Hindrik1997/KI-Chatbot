@@ -67,11 +67,22 @@ random_post_html(Subreddit, Html, Title) :-
 	fix_reddit_url(U, Url),
 	url_to_html(Url, Html).
 
-get_random_sub(Url) :-
+get_random_sub(Sub) :-
 	http_open('https://www.reddit.com/r/random.json', Stream, []),
 	json_read(Stream, json(List), []),
 	member(data=Data, List),
 	arg(1, Data, Info),
 	member(children=Children, Info),
 	arg(1, Children, T0),
-	member(data=Url, T0).
+	arg(1, T0, T1),
+	member(data=T2, T1),
+	arg(1,T2,T3),
+	member(subreddit=Sub, T3).
+
+link_url(Src, Html) :-
+  atom_concat("<a href='", Src, O),
+  atom_concat(O, "'>Link</a>", Html).
+
+reddit_url(Subreddit, Url) :-
+  atom_concat("http://www.reddit.com/r/", Subreddit, Url).
+
