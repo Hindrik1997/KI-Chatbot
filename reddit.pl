@@ -294,14 +294,29 @@ category([
 
 %%---------------------------------------------------------------------------------------------------------------------
 
+was_random(Sub) :-
+	context(A),
+	arg(2, A, B),
+	arg(2, B, C),
+	arg(2, C, D),
+	arg(1, D, E),
+	E==random,
+	arg(2, D, F),
+	arg(2,F,G),
+	arg(1,G, Sub).
+
+
 category([
-	pattern(['Give',me,a,random,subreddit]),
-	template([think(get_random_sub(Sub)),think(reddit_url(Sub,Html)),think(link_url(Html, Html2)),"Here is a random subreddit: ",Sub,' ',Html2])
+	pattern(['Show',me,the,top,post]),
+	template([
+		think(was_random(Sub)),
+		think(top_post_html(Sub, Html, Title)),
+		'I',found,this,great,post,from,Sub,':',Html,'It\'s',titled,Title])
 ]).
 
 category([
-	pattern(['Tell',me,the,top,post]),
-	template(think(context(A)))
+	pattern(['Give',me,a,random,subreddit]),
+	template([think(get_random_sub(Sub)),think(reddit_url(Sub,Html)),think(link_url(Html, Html2)),'Here',is,a,random,'subreddit:',Sub,' ',Html2])
 ]).
 
 %--------------------------------------------------------------------------------------------------------------------
