@@ -70,3 +70,11 @@ get_random_sub(Sub) :-
 	member(data=T2, T1),
 	arg(1,T2,T3),
 	member(subreddit=Sub, T3).
+
+link_url(Src, Html) :-
+  atom_concat("<a href='", Src, O),
+  atom_concat(O, "'>Link</a>", Html).
+
+reddit_url(Subreddit, Url) :-
+  atom_concat("http://www.reddit.com/r/", Subreddit, Url).
+
