@@ -168,6 +168,7 @@ category([
 	that(['What',is,your,favorite,type,of,post,'?']),
 	template(['Heres',a,great,post,about,A,':',think(top_post_html(A, H, T)), H, 'it\'s', 'titled:',T])
 ]).
+
 category([
 	pattern([star(A)]),
 	that(['What',is,the,best,subreddit,in,the,world,'?']),
