@@ -299,7 +299,6 @@ category([
 	template([think(get_random_sub(Sub)),think(reddit_url(Sub,Html)),think(link_url(Html, Html2)),Sub,' ',Html2])
 ]).
 
-
 %--------------------------------------------------------------------------------------------------------------------
 %%%
 
