@@ -31,6 +31,10 @@ isQuestion(List) :-
 
 isQuestionMark('?').
 
+link(Src, Html) :-
+	atom_concat("<a href='", Src, O),
+	atom_concat(O, "'>Link</a>", Html).
+
 img(Src, Html) :-
 	atom_concat("<img src='", Src, O),
 	atom_concat(O, "'>", Html).
@@ -66,12 +70,22 @@ image(Url) :- atom_contains('500px', Url).
 
 video(Url) :- atom_contains('.webm', Url).
 
+selfpost(Url) :- atom_contains('/comments/', Url).
+
 httpsgfycat(Url) :- atom_contains('https://gfycat', Url).
 httpgfycat(Url) :- atom_contains('http://gfycat', Url).
 
 gifv(Url) :- atom_contains('.gifv', Url).
 
 imgur(Url) :- atom_contains('://imgur', Url).
+
+url_to_html(Url, Html) :-
+	selfpost(Url),
+	atom_concat(Url, '.json', ApiUrl),
+	self_post_info(ApiUrl, Text, _),
+	%% format(atom(TitleHtml), '<h3>~s<h3>', Title),
+	format(atom(Html), '<div id="selfpost">~s</div>', Text).
+	%% atom_concat(TitleHtml, TextHtml, Html).
 
 url_to_html(Url, Html) :-
 	youtube(Url),
@@ -154,6 +168,7 @@ category([
 	that(['What',is,your,favorite,type,of,post,'?']),
 	template(['Heres',a,great,post,about,A,':',think(top_post_html(A, H, T)), H, 'it\'s', 'titled:',T])
 ]).
+
 category([
 	pattern([star(A)]),
 	that(['What',is,the,best,subreddit,in,the,world,'?']),

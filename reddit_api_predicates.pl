@@ -35,6 +35,14 @@ top_post_info(Subreddit, Url, Title) :-
 	member(url=Url, T5),
 	member(title=Title, T5),!.
 
+self_post_info(Url, Html, Title) :-
+	http_open(Url, Stream, []),
+	json_read_dict(Stream, Json, []),
+	arg(1,Json,D),
+	arg(1,D.data.children,New),
+	Html=New.data.selftext,
+	Title=New.data.title.
+
 fix_reddit_url(Url, Removed) :-
 	atom_contains('amp;', Url),
 	remove_from_atom(Url, 'amp;', Removed),!.
